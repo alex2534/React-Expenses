@@ -1,65 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 
-import TodoList from "./componensts/TodoList";
+import Expenses from "./components/Expenses/Expenses";
+import NewExpense from "./components/NewExpense/NewExpense";
 
-
+const DUMMY_EXPENSES = [
+	{
+		id: "e1",
+		title: "Toilet Paper",
+		amount: 94.12,
+		date: new Date(2020, 7, 14),
+	},
+	{
+		id: "e2",
+		title: "New TV",
+		amount: 799.49,
+		date: new Date(2021, 2, 12),
+	},
+	{
+		id: "e3",
+		title: "Car Insurance",
+		amount: 294.67,
+		date: new Date(2021, 2, 28),
+	},
+	{
+		id: "e4",
+		title: "New Desk (Wooden)",
+		amount: 450,
+		date: new Date(2021, 5, 12),
+	},
+];
 
 function App() {
+	const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
 
-  const coisasAParaFazer = [
-    {
-      id: 'e1',
-      title: 'limpar casa',
-      time: '1 hora',
-      date: new Date(2020, 7, 14),
-    },
-    { id: 'e2',
-      title: 'Limpar carro',
-       time: '2 horas',
-       date: new Date(2021, 2, 12) },
-    {
-      id: 'e3',
-      title: 'Lava cachorro',
-      time: '1 hora',
-      date: new Date(2021, 2, 28),
-    },
-    {
-      id: 'e4',
-      title: 'Arrumar escritorio',
-      time: '1 hora',
-      date: new Date(2021, 5, 12),
-    },
-  ];
+	const addExpenseHandler = (expense) => {
+		setExpenses((prevExpenses) => {
+			return [expense, ...prevExpenses];
+		});
+	};
 
+	return (
+		<div>
+			{/* /Passsando um pointer para o component NewExpense  */}
 
-
-
-  return (
-    <div className="App">
-    <TodoList  
-      title={coisasAParaFazer[0].title}
-      time={coisasAParaFazer[0].time}
-      date={coisasAParaFazer[0].date}
-    />
-<TodoList  
-      title={coisasAParaFazer[1].title}
-      time={coisasAParaFazer[1].time}
-      date={coisasAParaFazer[1].date}
-    />
-<TodoList  
-      title={coisasAParaFazer[2].title}
-      time={coisasAParaFazer[2].time}
-      date={coisasAParaFazer[2].date}
-    />
-<TodoList  
-      title={coisasAParaFazer[3].title}
-      time={coisasAParaFazer[3].time}
-      date={coisasAParaFazer[3].date}
-    />
-
-
-    </div>
-  );
+			<NewExpense onAddExpense={addExpenseHandler} />
+			<Expenses items={expenses} />
+		</div>
+	);
 }
 
 export default App;
